@@ -1,21 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Posters from './Posters'
 import Carousel from './Carousel'
 
 interface Props {
-  movies: any
+  movies?: any
 }
 
 function Movies({ movies }: Props) {
-  const popularMovies = movies.popular.results
-  const upcomingMovies = movies.upcoming.results
-  const topRatedMovies = movies.topRated.results
-  const comedy = movies.comedy.results
-  const action = movies.action.results
-  const adventure = movies.adventure.results
-  const animation = movies.animation.results
-  const horror = movies.horror.results
+  const popularMovies = movies?.popular?.results ?? []
+  const upcomingMovies = movies?.upcoming?.results ?? []
+  const topRatedMovies = movies?.topRated?.results ?? []
+  const comedy = movies?.comedy?.results ?? []
+  const action = movies?.action?.results ?? []
+  const adventure = movies?.adventure?.results ?? []
+  const animation = movies?.animation?.results ?? []
+  const horror = movies?.horror?.results ?? []
 
   return (
     <div>

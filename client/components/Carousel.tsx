@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Posters from './Posters'
 
 interface Props {
-  contentList: any
+  contentList?: any
   type: string
 }
 
-function Carousel(props: Props) {
+function Carousel({ contentList, type }: Props) {
+  const items = Array.isArray(contentList) ? contentList : []
   const tmdbPosterLink = `https://image.tmdb.org/t/p/w500/`
 
   return (
@@ -15,10 +16,10 @@ function Carousel(props: Props) {
         <div className="carousel-wrapper flex gap-4">
           {/* <div className="flex justify-center">
       <div className="flex flex-wrap gap-4"> */}
-          {props.contentList.map((movie) => (
+          {items.map((movie) => (
             <div key={movie.id} className="poster flex-none">
               <Posters
-                type={props.type}
+                type={type}
                 content={movie}
                 tmdbPosterLink={tmdbPosterLink}
               />

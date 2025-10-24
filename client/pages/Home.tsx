@@ -21,12 +21,16 @@ function Home() {
     data: movies,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ['movies'],
     queryFn: getMovies,
   })
   if (isLoading) return <h1>Loading...</h1>
-  if (isError) return console.error(error)
+  if (isError) {
+    console.error('Failed to load movies', error)
+    return <p>Something went wrong loading movies.</p>
+  }
 
   function onButtonClick() {
     setEntertainmentType(!entertainmentType)

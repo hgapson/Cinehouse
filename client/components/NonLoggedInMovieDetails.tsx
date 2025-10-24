@@ -1,5 +1,15 @@
 import React from 'react'
 
+type Props = {
+  details: {
+    title: string
+    original_title?: string
+    overview: string
+    poster_path?: string
+    runtime?: number
+  }
+}
+
 function NonLoggedInMovieDetails(props: Props) {
   const { details } = props
 
