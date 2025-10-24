@@ -111,7 +111,6 @@ function PostersForWatchlist(props: Props) {
     <div>
       <NavHashLink to={`/details/${type}/${content.id}#trailer`}>
         {!content.poster_path || content.poster_path == 'null' ? (
-          <>
             <div className="relative">
               <img
                 alt={content.title ? `${content.title}` : `${content.name}`}
@@ -119,13 +118,13 @@ function PostersForWatchlist(props: Props) {
                 className="w-52"
               ></img>
               <div className="text-white absolute top-1/4">
-                <p>{content.title ? `${content.title}` : `${content.name}`}</p>
+                <p>
+                  {content.title ? `${content.title}` : `${content.name}`}
+                </p>
                 <p>{`${getReleaseYear()}`}</p>
               </div>
             </div>
-          </>
-        ) : (
-          <>
+          ) : (
             <div className="flex gap">
               <img
                 src={`${tmdbPosterLink}${content.poster_path}`}
@@ -133,8 +132,8 @@ function PostersForWatchlist(props: Props) {
                 className="w-52 rounded"
               />
             </div>
-          </>
-        )}
+          )
+        }
       </NavHashLink>
 
       <div className="flex justify-between">
@@ -157,5 +156,6 @@ function PostersForWatchlist(props: Props) {
     </div>
   )
 }
+
 
 export default PostersForWatchlist

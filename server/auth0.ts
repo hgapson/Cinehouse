@@ -3,10 +3,24 @@ import { Request } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
 import { JwtPayload } from 'jsonwebtoken'
 import jwks from 'jwks-rsa'
+import dotenv from 'dotenv'
 
-// TODO: set the domain and audience (API Identifier)
-const domain = 'https://vitor-pohutukawa.au.auth0.com'
-const audience = 'https://cine/api'
+dotenv.config()
+
+const domainFromEnv = process.env.AUTH0_DOMAIN
+const audience = process.env.AUTH0_AUDIENCE
+
+if (!domainFromEnv) {
+  throw new Error('Missing AUTH0_DOMAIN environment variable')
+}
+
+if (!audience) {
+  throw new Error('Missing AUTH0_AUDIENCE environment variable')
+}
+
+const domain = domainFromEnv.startsWith('https://')
+  ? domainFromEnv
+  : `https://${domainFromEnv}`
 
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({

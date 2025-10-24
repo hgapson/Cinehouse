@@ -29,8 +29,12 @@ function Nav() {
   }
 
   useEffect(() => {
-    handleToken()
-  }, [])
+    if (!user) return
+
+    handleToken().catch((err) => {
+      console.error('Failed to sync user profile', err)
+    })
+  }, [user])
 
   return (
     <>

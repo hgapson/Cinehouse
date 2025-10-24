@@ -8,6 +8,16 @@ const queryClient = new QueryClient()
 
 const router = createBrowserRouter(routes)
 
+const domain = import.meta.env.VITE_AUTH0_DOMAIN
+const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID
+const audience = import.meta.env.VITE_AUTH0_AUDIENCE
+
+if (!domain || !clientId || !audience) {
+  console.error(
+    'Missing Auth0 configuration. Check VITE_AUTH0_DOMAIN, VITE_AUTH0_CLIENT_ID, and VITE_AUTH0_AUDIENCE.'
+  )
+}
+
 const root = createRoot(document.getElementById('app') as HTMLElement)
 root.render(
   /**
@@ -17,10 +27,10 @@ root.render(
    * TODO: replace the empty strings below with your own domain, clientId, and audience
    */
   <Auth0Provider
-    domain="vitor-pohutukawa.au.auth0.com"
-    clientId="Xcg63DxMMQdqKtvhIdt5zdPPPAtgVFoP"
+    domain={domain}
+    clientId={clientId}
     redirectUri={window.location.origin}
-    audience="https://cine/api"
+    audience={audience}
   >
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
