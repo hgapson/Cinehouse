@@ -9,11 +9,15 @@ export async function getUser(token: unknown) {
   return res.body
 }
 
-export async function postUser(token: unknown) {
+export async function postUser(
+  token: unknown,
+  profile: Record<string, unknown> = {}
+) {
   const res = await request
     .post('/api/v1/cine')
     .set('Authorization', `Bearer ${token}`)
     .set('Content-Type', 'application/json')
+    .send(profile)
 
   return res.body
 }

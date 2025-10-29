@@ -1,4 +1,4 @@
-import { NavHashLink } from 'react-router-hash-link'
+import { HashLink } from 'react-router-hash-link'
 
 function Posters(props: Props) {
   const { type, content } = props
@@ -18,7 +18,7 @@ function Posters(props: Props) {
 
   return (
     <div>
-      <NavHashLink to={`/details/${type}/${content.id}#trailer`}>
+      <HashLink to={`/details/${type}/${content.id}#trailer`}>
         {!content.poster_path || content.poster_path == 'null' ? (
             <div className="relative">
               <img
@@ -43,7 +43,7 @@ function Posters(props: Props) {
             </div>
           )
         }
-      </NavHashLink>
+      </HashLink>
       {/* <p>{`ID: ${content.id}`}</p> */}
     </div>
   )
