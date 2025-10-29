@@ -1,6 +1,18 @@
 import { HashLink } from 'react-router-hash-link'
 
-function Posters(props: Props) {
+interface PostersProps {
+  type: string
+  content: {
+    id: number
+    poster_path?: string | null
+    title?: string
+    name?: string
+    release_date?: string
+    first_air_date?: string
+  }
+}
+
+function Posters(props: PostersProps) {
   const { type, content } = props
   const tmdbPosterLink = `https://image.tmdb.org/t/p/w500/`
 

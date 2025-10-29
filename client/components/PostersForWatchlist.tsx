@@ -8,32 +8,39 @@ import {
   deleteFromCompletedList,
   deleteFromWatchlist,
 } from '../api/dbApi'
+import { WatchlistData } from '../models/models'
 
-function PostersForWatchlist(props: Props) {
+interface PostersForWatchlistProps {
+  type: string
+  id: number
+  state: 'watchlist' | 'completed'
+}
+
+function PostersForWatchlist(props: PostersForWatchlistProps) {
   const { type, id, state } = props
 
   const mutateDeleteFromCompletedList = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (item: WatchlistData) => {
       const token = await getAccessTokenSilently()
-      await deleteFromCompletedList(toWatchList, token)
+      await deleteFromCompletedList(item, token)
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['completedChecker'])
     },
   })
   const mutateDeleteFromWatchList = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (item: WatchlistData) => {
       const token = await getAccessTokenSilently()
-      await deleteFromWatchlist(toWatchList, token)
+      await deleteFromWatchlist(item, token)
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['watchlistChecker'])
     },
   })
   const addToCompletedListFromWatch = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (item: WatchlistData) => {
       const token = await getAccessTokenSilently()
-      await addToCompletedList(toWatchList, token)
+      await addToCompletedList(item, token)
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['watchlistChecker'])
@@ -84,27 +91,25 @@ function PostersForWatchlist(props: Props) {
     } else return 'Release date unknown'
   }
 
-  const toWatchList = {
+  const toWatchList: WatchlistData = {
     content_id: content.id,
     movie_or_show: type,
     auth_id: auth0Id,
   }
 
   async function handleWatchListClickDelete() {
-    const token = await getAccessTokenSilently()
     if (state == 'watchlist') {
-      mutateDeleteFromWatchList.mutate(toWatchList, token)
+      mutateDeleteFromWatchList.mutate(toWatchList)
     } else if (state == 'completed') {
-      mutateDeleteFromCompletedList.mutate(toWatchList, token)
+      mutateDeleteFromCompletedList.mutate(toWatchList)
       // await deleteFromCompletedList(toWatchList, token)
     }
     queryClient.invalidateQueries(['watchlistChecker', 'completedChecker', id])
   }
 
   async function handleGreenTickClick() {
-    const token = await getAccessTokenSilently()
     handleWatchListClickDelete()
-    addToCompletedListFromWatch.mutate(toWatchList, token)
+    addToCompletedListFromWatch.mutate(toWatchList)
   }
 
   return (
